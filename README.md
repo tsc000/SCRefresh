@@ -1,7 +1,4 @@
 #SCRefresh
-
-        刷新控件现在很多，之所以再次写是因为第个项目的刷新形式可能不一样，自己
-    熟悉了里面的流程之后，再修改其它样式就相对方便。
     
          整个功能的大致思路是利用Runtime为UIScrollView的分类增加一个属性，在
     我们的工程使用UIScrollView及其相关子类（如：UITableView）就可以当作
@@ -15,6 +12,34 @@
     可以重新定义新的刷新控件，只要继承SCRefreshBase并实现相应的代理方法和 
     重写基类的方法。
         
+       
+
+---
+
+#### Podfile
+To integrate AFNetworking into your Xcode project using CocoaPods, specify it in your Podfile:
+
+
+```
+source 'https://github.com/tsc000/SCPeriodicScrollView.git'
+platform :ios, '8.0'
+
+target 'TargetName' do
+pod 'SCRefresh', '~> 0.0.1'
+end
+```
+
+
+Then, run the following command:
+
+
+```
+$ pod install
+```
+
+---
+
+
 #####     里面关键性的注释已经写上。有不明白的地方或写得不当的地方请加QQ 767616124
     欢迎大家交流。
     
