@@ -21,7 +21,7 @@ To integrate AFNetworking into your Xcode project using CocoaPods, specify it in
 
 
 ```
-source 'https://github.com/tsc000/SCPeriodicScrollView.git'
+source 'https://github.com/tsc000/SCRefresh.git'
 platform :ios, '8.0'
 
 target 'TargetName' do
