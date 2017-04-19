@@ -24,6 +24,7 @@
 		5952D75E1D376C70009AD73A /* RefreshScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5952D75D1D376C70009AD73A /* RefreshScrollViewController.m */; };
 		59E0DA241E569C6C005CDC4B /* UIView+SCExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 59E0DA231E569C6C005CDC4B /* UIView+SCExtension.m */; };
 		59F5D11C1E5BE561000B084B /* Enjoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F5D11B1E5BE561000B084B /* Enjoy.m */; };
+		E7F9D0291EA7908200C6C9EF /* arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E7F9D0281EA7908200C6C9EF /* arrow@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,7 @@
 		59E0DA251E569CD1005CDC4B /* SCCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCCommon.h; sourceTree = "<group>"; };
 		59F5D11A1E5BE561000B084B /* Enjoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Enjoy.h; path = Refresh/Enjoy.h; sourceTree = SOURCE_ROOT; };
 		59F5D11B1E5BE561000B084B /* Enjoy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Enjoy.m; path = Refresh/Enjoy.m; sourceTree = SOURCE_ROOT; };
+		E7F9D0281EA7908200C6C9EF /* arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +181,7 @@
 		5952D7461D376A10009AD73A /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				E7F9D0271EA7908200C6C9EF /* SCRefreshImage */,
 				59501AC91D38AA210038F2F5 /* SCRefresh.bundle */,
 				5952D7471D376A10009AD73A /* SCRefresh.h */,
 				5952D7481D376A10009AD73A /* SCRefresh.m */,
@@ -191,6 +194,14 @@
 				59F5D11B1E5BE561000B084B /* Enjoy.m */,
 			);
 			path = Source;
+			sourceTree = "<group>";
+		};
+		E7F9D0271EA7908200C6C9EF /* SCRefreshImage */ = {
+			isa = PBXGroup;
+			children = (
+				E7F9D0281EA7908200C6C9EF /* arrow@2x.png */,
+			);
+			path = SCRefreshImage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -298,6 +309,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5952D7231D3769FD009AD73A /* LaunchScreen.storyboard in Resources */,
+				E7F9D0291EA7908200C6C9EF /* arrow@2x.png in Resources */,
 				59501ACA1D38AA210038F2F5 /* SCRefresh.bundle in Resources */,
 				5952D7201D3769FD009AD73A /* Assets.xcassets in Resources */,
 				5952D71E1D3769FD009AD73A /* Main.storyboard in Resources */,

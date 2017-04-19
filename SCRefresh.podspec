@@ -33,7 +33,7 @@ Pod::Spec.new do |s|
 
   s.public_header_files = "Refresh/Refresh/Source/*.h"
 
-  s.resource  = "Refresh/Refresh/Source/SCRefresh.bundle/arrow@2x.png"
+  s.resource  = "Refresh/Refresh/Source/SCRefreshImage/arrow@2x.png"
   # s.resources = "Resources/*.png"
 
   # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
