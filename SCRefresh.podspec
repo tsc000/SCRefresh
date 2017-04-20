@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "SCRefresh"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = " A custom refresh control."
   s.description  = " A custom refresh control ."
 
@@ -33,7 +33,7 @@ Pod::Spec.new do |s|
 
   s.public_header_files = "Refresh/Refresh/Source/*.h"
 
-  s.resource  = "Refresh/Refresh/Source/SCRefreshImage/arrow@2x.png"
+  s.resource  = "Refresh/Refresh/Source/SCRefresh.bundle"
   # s.resources = "Resources/*.png"
 
   # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
