@@ -339,7 +339,7 @@
 /** 创建箭头 */
 - (void)createImageViewWithFrame:(CGRect)frame {
     
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow"]];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow@2x"]];
     
     imageView.frame = frame;
     
