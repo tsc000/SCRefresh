@@ -13,7 +13,6 @@
 #define SCContentSize @"contentSize"
 
 #define SCLastRefreshTime (@"LastRefreshTime")
-#define SCRefreshResourceName(file) [@"SCRefresh.bundle" stringByAppendingPathComponent:file]
 
 //下拉刷新
 #define SCStaticTopTitle (@"下拉可以刷新")

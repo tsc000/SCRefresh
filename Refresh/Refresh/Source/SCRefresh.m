@@ -339,13 +339,11 @@
 /** 创建箭头 */
 - (void)createImageViewWithFrame:(CGRect)frame {
     
-//    NSString *mainString = [[NSBundle mainBundle] pathForResource:@"SCRefresh" ofType:@"bundle"];
-//
-//    NSString *path = []
-//    
-//    arrowImage = [[UIImage imageWithContentsOfFile:[[self mj_refreshBundle] pathForResource:@"arrow@2x" ofType:@"png"]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    NSBundle *bundleString = [NSBundle bundleWithPath:[[NSBundle bundleForClass:[SCRefresh class]] pathForResource:@"SCRefresh" ofType:@"bundle"]];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:SCRefreshResourceName(@"arrow@2x")]];
+    UIImage * arrowImage = [[UIImage imageWithContentsOfFile:[bundleString pathForResource:@"arrow@2x" ofType:@"png"]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:arrowImage];
     
     imageView.frame = frame;
     

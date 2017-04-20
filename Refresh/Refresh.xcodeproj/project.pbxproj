@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		5911A5911E6EB02900B4E14F /* EnjoyTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5911A5901E6EB02900B4E14F /* EnjoyTableViewController.m */; };
 		59501ACA1D38AA210038F2F5 /* SCRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 59501AC91D38AA210038F2F5 /* SCRefresh.bundle */; };
-		595081531EA838B9005F9332 /* arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 595081521EA838B9005F9332 /* arrow@2x.png */; };
 		5952D7151D3769FD009AD73A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5952D7141D3769FD009AD73A /* main.m */; };
 		5952D7181D3769FD009AD73A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5952D7171D3769FD009AD73A /* AppDelegate.m */; };
 		5952D71B1D3769FD009AD73A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5952D71A1D3769FD009AD73A /* ViewController.m */; };
@@ -48,7 +47,6 @@
 		5911A58F1E6EB02900B4E14F /* EnjoyTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnjoyTableViewController.h; sourceTree = "<group>"; };
 		5911A5901E6EB02900B4E14F /* EnjoyTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnjoyTableViewController.m; sourceTree = "<group>"; };
 		59501AC91D38AA210038F2F5 /* SCRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SCRefresh.bundle; sourceTree = "<group>"; };
-		595081521EA838B9005F9332 /* arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow@2x.png"; sourceTree = "<group>"; };
 		5952D7101D3769FD009AD73A /* Refresh.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Refresh.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5952D7141D3769FD009AD73A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5952D7161D3769FD009AD73A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -107,14 +105,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		595081511EA838B9005F9332 /* SCRefreshImage */ = {
-			isa = PBXGroup;
-			children = (
-				595081521EA838B9005F9332 /* arrow@2x.png */,
-			);
-			path = SCRefreshImage;
-			sourceTree = "<group>";
-		};
 		5952D7071D3769FD009AD73A = {
 			isa = PBXGroup;
 			children = (
@@ -189,7 +179,6 @@
 		5952D7461D376A10009AD73A /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				595081511EA838B9005F9332 /* SCRefreshImage */,
 				59501AC91D38AA210038F2F5 /* SCRefresh.bundle */,
 				5952D7471D376A10009AD73A /* SCRefresh.h */,
 				5952D7481D376A10009AD73A /* SCRefresh.m */,
@@ -309,7 +298,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5952D7231D3769FD009AD73A /* LaunchScreen.storyboard in Resources */,
-				595081531EA838B9005F9332 /* arrow@2x.png in Resources */,
 				59501ACA1D38AA210038F2F5 /* SCRefresh.bundle in Resources */,
 				5952D7201D3769FD009AD73A /* Assets.xcassets in Resources */,
 				5952D71E1D3769FD009AD73A /* Main.storyboard in Resources */,

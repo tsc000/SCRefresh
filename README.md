@@ -25,7 +25,7 @@ source 'https://github.com/tsc000/SCRefresh.git'
 platform :ios, '8.0'
 
 target 'TargetName' do
-pod 'SCRefresh', '~> 0.0.1'
+pod 'SCRefresh', '~> 0.0.2'
 end
 ```
 
