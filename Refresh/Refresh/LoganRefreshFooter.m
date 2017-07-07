@@ -65,9 +65,35 @@
     
     [super scrollViewContentSizeChange:change];
     
-    if (self.type) return;
+    if (self.type == 0) {
+        [self changeFrame];
+    } else {
+        self.logo.hidden = false;
+        
+        /////底部边距
+        self.bottomHeight = 150;
+        
+        self.scrollView.contentInset = UIEdgeInsetsMake(_scrollViewOrginInsets.top, _scrollViewOrginInsets.top, self.bottomHeight, _scrollViewOrginInsets.top);
+        
+        self.logo.y = self.scrollView.contentSize.height + (self.bottomHeight - self.logo.height) / 2.0 - self.logo.height / 2.0;
+        
+        /////间距
+        self.bottomButton.y = CGRectGetMaxY(self.logo.frame) + 10;
+        
+        self.bottomFlower.centerY = self.bottomButton.centerY;
+        
+        [self setNeedsLayout];
+        
+        [self.scrollView setContentOffset:CGPointMake(0, self.scrollView.contentSize.height + self.bottomHeight - [UIScreen mainScreen].bounds.size.height + 64) animated:true];
+        
+        self.finishedFootTitle = @"没有更多了";
+        
+        [self revertState:false];
+
+    }
     
-    [self changeFrame];
+    
+    
 }
 
 - (void)endRefreshing {
