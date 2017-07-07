@@ -53,6 +53,7 @@ static NSString * const reuseIdentifier = @"Cell";
         });
     }];
 
+    [self.collectionView.sc_header beginRefreshing];
 }
 
 #pragma mark <UICollectionViewDataSource>

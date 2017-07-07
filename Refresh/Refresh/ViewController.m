@@ -39,7 +39,7 @@ UITableViewDelegate
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    self.edgesForExtendedLayout = false;
+    self.edgesForExtendedLayout = false;
     
     self.sectionTitles = @[@"TableView", @"CollectionView", @"ScrollView"];
     
@@ -61,6 +61,7 @@ UITableViewDelegate
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 
+        
         [weakSelf.tableView.sc_header endRefreshing];
         
     });
