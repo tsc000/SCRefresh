@@ -119,7 +119,7 @@ UITableViewDelegate
     
     if (indexPath.section == 0) {
         
-        if (indexPath.row == 3) {
+        if (indexPath.row == 4) {
             EnjoyTableViewController *vc = [EnjoyTableViewController new];
             
             [self.navigationController pushViewController:vc animated:true];
@@ -148,7 +148,7 @@ UITableViewDelegate
     if (_dataSource == nil) {
         _dataSource = [NSMutableArray array];
         
-        NSArray *tableViewSection = @[@"默认", @"自定义文字", @"自定义底部", @"Enjoy刷新", @"顶部隐藏时间"];
+        NSArray *tableViewSection = @[@"默认", @"自定义顶部文字", @"自定义底部文字", @"自定义底部", @"Enjoy刷新", @"顶部隐藏时间"];
         NSArray *collectionViewSection = @[@"默认"];
         NSArray *scrollViewSection = @[@"默认"];
 

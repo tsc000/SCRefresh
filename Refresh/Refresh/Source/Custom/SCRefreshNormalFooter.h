@@ -10,4 +10,10 @@
 
 @interface SCRefreshNormalFooter : SCRefreshFooter
 
+//加载中底部按钮显示文字
+@property (nonatomic, copy) NSString *loadingFootTitle;
+
+//加载完成底部按钮显示文字
+@property (nonatomic, copy) NSString *finishedFootTitle;
+
 @end

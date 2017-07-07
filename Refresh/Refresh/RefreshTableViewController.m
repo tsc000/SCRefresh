@@ -62,17 +62,54 @@
             self.tableView.sc_footer = [SCRefreshNormalFooter footerWithTarget:self action:@selector(loadMore)];
             
             break;
-        case 2:
-            
+        case 2: {
             self.tableView.sc_header = [SCRefreshStateHeader headerWithTarget:self action:@selector(refresh)];
             
-            self.tableView.sc_footer = [LoganRefreshFooter footerWithTarget:self action:@selector(loadMore)];
+            SCRefreshNormalFooter *footer = [SCRefreshNormalFooter footerWithRefreshingCallBack:^{
+                __weak typeof (self)weakSelf = self;
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+
+                    [weakSelf.tableView.sc_footer endRefreshing];
+                    
+                    [weakSelf.tableView reloadData];
+                    
+                });
+            }];
+            
+            footer.loadingFootTitle = @"老铁,别急，俺正在帮你刷新";
+            
+            footer.finishedFootTitle = @"老铁,刷新完了";
+            
+            self.tableView.sc_footer = footer;
             
             break;
-        case 3:
+        }
+    
+        case 3: {
+            self.tableView.sc_header = [SCRefreshStateHeader headerWithTarget:self action:@selector(refresh)];
             
+            self.tableView.sc_footer = [LoganRefreshFooter footerWithRefreshingCallBack:^{
+                __weak typeof (self)weakSelf = self;
+
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    
+ 
+                    [weakSelf.tableView.sc_footer endNoMoreDataRefreshing];
+                    
+                    [weakSelf.tableView reloadData];
+                    
+                    
+                });
+            }];
             break;
+        }
+  
         case 4:
+
+            break;
+        case 5:
+            
             self.tableView.sc_header = [SCRefreshNormalHeader headerWithTarget:self action:@selector(refresh)];
             break;
             
@@ -95,7 +132,10 @@
     UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:release];
     
     self.navigationItem.rightBarButtonItems = @[right];
-
+    
+    if (self.type == 2 || self.type == 3) {
+        return;
+    }
     [self.tableView.sc_header beginRefreshing];
 }
 
@@ -132,7 +172,7 @@
         
         weakSelf.count ++;
         
-        [weakSelf.tableView.sc_footer endNoMoreDataRefreshing];
+        [weakSelf.tableView.sc_footer endRefreshing];
         [weakSelf.tableView reloadData];
         
         

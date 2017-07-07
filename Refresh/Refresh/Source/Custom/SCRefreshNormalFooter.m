@@ -16,12 +16,6 @@
 /** 底部按钮 */
 @property (nonatomic, weak) UIButton *bottomButton;
 
-//加载中底部按钮显示文字
-@property (nonatomic, copy) NSString *loadingFootTitle;
-
-//加载完成底部按钮显示文字
-@property (nonatomic, copy) NSString *finishedFootTitle;
-
 /////
 @property (nonatomic, strong) NSMutableDictionary *stateTitles;
 
@@ -96,9 +90,15 @@
     //刷新状态
     if (state) {
         [self.bottomButton setTitle: self.loadingFootTitle forState:UIControlStateNormal];
+        
+        [self.bottomButton sizeToFit];
     } else {
         [self.bottomButton setTitle: self.finishedFootTitle forState:UIControlStateNormal];
+        
+        [self.bottomButton sizeToFit];
     }
+    
+    [self changeFrame];
 }
 
 /////

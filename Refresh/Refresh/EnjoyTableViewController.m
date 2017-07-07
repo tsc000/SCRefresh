@@ -28,7 +28,7 @@
     //    self.automaticallyAdjustsScrollViewInsets = NO;
     //    self.navigationController.navigationBar.translucent = YES ;
     self.edgesForExtendedLayout = UIRectEdgeNone ;
-    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     self.tableView.dataSource = self;
     self.tableView.contentSize = CGSizeMake(375, 200);
@@ -71,7 +71,6 @@
 
 - (void)shoppingCartButtonDidClick {
 
-    
     [self.tableView.sc_header beginRefreshing];
 }
 
