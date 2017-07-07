@@ -39,13 +39,13 @@
     __weak typeof (self)weakSelf = self;
     
     self.tableView.sc_header = [Enjoy headerWithRefreshingCallBack:^{
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-                [weakSelf.tableView reloadData];
-        
-                [weakSelf.tableView.sc_header endRefreshing];
-            });
-        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    
+            [weakSelf.tableView reloadData];
+    
+            [weakSelf.tableView.sc_header endRefreshing];
+        });
+    
     }];
 
     [self.tableView.sc_header beginRefreshing];

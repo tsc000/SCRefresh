@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "SCRefresh"
-  s.version      = "0.0.2"
+  s.version      = "0.2.0"
   s.summary      = " A custom refresh control."
   s.description  = " A custom refresh control ."
   s.homepage     = "https://github.com/tsc000"
@@ -12,9 +12,9 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "8.0"
   s.ios.deployment_target = "8.0"
   s.source       = { :git => "https://github.com/tsc000/SCRefresh.git", :tag => "#{s.version}" }
-  s.source_files  = "Refresh/Refresh/Source/*.{h,m}"
-  s.public_header_files = "Refresh/Refresh/Source/*.h"
-  s.resource  = "Refresh/Refresh/Source/SCRefresh.bundle"
+  s.source_files  = "Refresh/Refresh/Source/**/*.{h,m}"
+  s.public_header_files = "Refresh/Refresh/Source/Base/*.h"
+  s.resource  = "Refresh/Refresh/Source/Base/SCRefresh.bundle"
   s.framework  = "UIKit"
   s.requires_arc = true
 

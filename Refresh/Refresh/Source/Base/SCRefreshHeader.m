@@ -109,10 +109,7 @@
     [super setState:state];
     
     if (state == RefreshStateRefreshing) {
-    
-        //由于无法得知header和footer谁先添加到superView上，故_scrollViewOrginInsets只有在这里一次次的设置
-        _scrollViewOrginInsets = self.scrollView.contentInset;
-        
+  
         [UIView animateWithDuration: SCDurationTime animations:^{
     
             self.scrollView.contentInset = UIEdgeInsetsMake(SCTopHeight, 0, self.scrollView.contentInset.bottom, 0);
@@ -134,6 +131,11 @@
 #pragma mark - 监听ContentOffset
 - (void)scrollViewContentOffsetChange:(NSDictionary *)change {
     [super scrollViewContentOffsetChange:change];
+    
+    if ([self isRefreshing]) return;
+    
+    //由于无法得知header和footer谁先添加到superView上，故_scrollViewOrginInsets只有在这里一次次的设置
+    _scrollViewOrginInsets = self.scrollView.contentInset;
     
     CGFloat orginY = -[change[@"new"] CGPointValue].y;
     

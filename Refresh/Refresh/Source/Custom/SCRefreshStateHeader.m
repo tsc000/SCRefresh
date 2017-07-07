@@ -22,18 +22,18 @@
     [super prepare];
     
     /** 提示 */
-    self.remind = [self createLabelWithSize:CGSizeMake(160, 24) Title: SCTopNormalTitle];
+    self.stateLabel = [self createLabelWithSize:CGSizeMake(160, 24) Title: SCTopNormalTitle];
     
     /** 时间 */
-    self.time = [self createLabelWithSize:CGSizeMake(160, 24) Title:@"最后更新: 暂无更新"];
+    self.timeLabel = [self createLabelWithSize:CGSizeMake(160, 24) Title:@"最后更新: 暂无更新"];
 
     /** 箭头 */
-    [self createImageViewWithSize:CGSizeMake(15, 30)];
+    [self createImageViewWithSize:CGSizeMake(15, 45)];
     
     /** 菊花 */
     self.topFlower = [self createActivityIndicatorViewWithSize:CGSizeMake(50/375 * self.scrollView.width, 50/375 * self.scrollView.width)];
     
-    self.time.text = [self getLastRefreshTime:SCLastRefreshTime];
+    self.timeLabel.text = [self getLastRefreshTime:SCLastRefreshTime];
 }
 
 - (void)placeSubviews {
@@ -64,7 +64,7 @@
     
     [formatter setDateFormat:@"HH:mm"];
     
-    self.time.text = [NSString stringWithFormat:@"最后更新: 今天 %@",[formatter stringFromDate:date]];
+    self.timeLabel.text = [NSString stringWithFormat:@"最后更新: 今天 %@",[formatter stringFromDate:date]];
 }
 
 - (void)scrollViewContentOffsetChange:(NSDictionary *)change {
@@ -87,9 +87,9 @@
             
             [UIView animateWithDuration:SCDurationTime animations:^{
                 
-                self.imageView.transform = CGAffineTransformIdentity;
+                self.topArrowImageView.transform = CGAffineTransformIdentity;
                 
-                self.remind.text = self.stateTitles[@(self.state)];
+                self.stateLabel.text = self.stateTitles[@(self.state)];
             }];
             
             break;
@@ -99,9 +99,9 @@
             
             [UIView animateWithDuration:SCDurationTime animations:^{
                 
-                self.imageView.transform = CGAffineTransformRotate(self.imageView.transform, 0.000001 - M_PI);
+                self.topArrowImageView.transform = CGAffineTransformRotate(self.topArrowImageView.transform, 0.000001 - M_PI);
                 
-                self.remind.text = self.stateTitles[@(self.state)];
+                self.stateLabel.text = self.stateTitles[@(self.state)];
             }];
             
             break;
@@ -112,11 +112,11 @@
 }
 
 - (void)revertstate:(BOOL)state {
-    self.imageView.hidden = state;
+    self.topArrowImageView.hidden = state;
     
     self.topFlower.hidden = !state;
 
-    self.remind.text = self.stateTitles[@(self.state)];
+    self.stateLabel.text = self.stateTitles[@(self.state)];
     
     state ? [self.topFlower startAnimating] : [self.topFlower stopAnimating];
 }
@@ -133,13 +133,13 @@
 
     CGFloat centerX = self.scrollView.centerX - self.scrollView.x;
     
-    self.remind.center = CGPointMake(centerX, -SCTopHeight + 14);
+    self.stateLabel.center = CGPointMake(centerX, -SCTopHeight + 14);
 
-    self.time.center = CGPointMake(centerX, CGRectGetMaxY(self.remind.frame) + self.time.height / 2.0);
+    self.timeLabel.center = CGPointMake(centerX, CGRectGetMaxY(self.stateLabel.frame) + self.timeLabel.height / 2.0);
 
-    self.topFlower.center = CGPointMake(self.time.x - 40, - SCTopHeight / 2.0 );
+    self.topFlower.center = CGPointMake(self.timeLabel.x - 40, - SCTopHeight / 2.0 );
     
-    self.imageView.center = self.topFlower.center;
+    self.topArrowImageView.center = self.topFlower.center;
 
 }
 
@@ -151,7 +151,7 @@
     
     self.stateTitles[@(state)] = title;
     
-    self.remind.text = self.stateTitles[@(state)];
+    self.stateLabel.text = self.stateTitles[@(state)];
 }
 
 #pragma mark - 处理时间
@@ -239,7 +239,7 @@
     
     [self addSubview:imageView];
     
-    self.imageView = imageView;
+    self.topArrowImageView = imageView;
 }
 
 #pragma mark - 懒加载

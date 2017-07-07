@@ -18,9 +18,12 @@
     
     [super placeSubviews];
     
-    self.time.hidden = true;
+    self.timeLabel.hidden = true;
     
-    self.remind.centerY = self.topFlower.centerY;
+    self.topArrowImageView.size = CGSizeMake(15, 30);
+    
+    [self updateFrame];
+
 }
 
 /** 监听ContentSize改变事件 */
@@ -28,8 +31,15 @@
     
     [super scrollViewContentSizeChange:change];
 
-    self.remind.centerY = self.topFlower.centerY;
+    [self updateFrame];
+ 
 }
 
-
+- (void)updateFrame {
+    self.topFlower.center = CGPointMake(self.timeLabel.x - 10, self.topFlower.centerY);
+    
+    self.topArrowImageView.center = self.topFlower.center;
+    
+    self.stateLabel.centerY = self.topFlower.centerY;
+}
 @end

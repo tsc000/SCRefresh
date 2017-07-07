@@ -75,6 +75,9 @@
 
     if ([self isRefreshing]) return;
 
+    //由于无法得知header和footer谁先添加到superView上，故_scrollViewOrginInsets只有在这里一次次的设置
+    _scrollViewOrginInsets = self.scrollView.contentInset;
+    
     //暂定height< 0 ,不显示底部刷新
     if (self.scrollView.contentSize.height <= 0) { return; }
 
