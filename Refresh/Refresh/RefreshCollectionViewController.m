@@ -7,7 +7,9 @@
 //
 
 #import "RefreshCollectionViewController.h"
-#import "SCRefresh.h"
+#import "SCRefreshStateHeader.h"
+#import "SCRefreshNormalFooter.h"
+
 
 #define LGRandomColor [UIColor colorWithRed:((arc4random()%255)/255.0) green:((arc4random()%255)/255.0) blue:((arc4random()%255)/255.0) alpha:1.0f]
 
@@ -27,27 +29,27 @@ static NSString * const reuseIdentifier = @"Cell";
     self.edgesForExtendedLayout = UIRectEdgeNone ;
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     self.collectionView.backgroundColor = [UIColor whiteColor];
-    _count = 2;
+    _count = 8;
     __weak typeof (self)weakSelf = self;
     
     self.collectionView.dataSource = self;
     
-    self.collectionView.refresh = [SCRefresh refreshWithHeader:^{
-        
+    self.collectionView.sc_header = [SCRefreshStateHeader headerWithRefreshingCallBack:^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    
+                _count += 32;
+                [self.collectionView reloadData];
+                [weakSelf.collectionView.sc_header endRefreshing];
+            });
+    }];
+    
+
+    self.collectionView.sc_footer = [SCRefreshNormalFooter footerWithRefreshingCallBack:^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            
-            _count += 2;
+
+            _count += 32;
             [self.collectionView reloadData];
-            [weakSelf.collectionView.refresh endRefreshRefreshType:RefreshOptionHeader];
-        });
-        
-    } Footer:^{
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            _count += 2;
-            [self.collectionView reloadData];
-            [weakSelf.collectionView.refresh endRefreshRefreshType:RefreshOptionFooter];
-            
+            [weakSelf.collectionView.sc_footer endRefreshing];
         });
     }];
 

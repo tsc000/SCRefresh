@@ -10,4 +10,6 @@
 
 @interface RefreshTableViewController : UITableViewController
 
+@property (nonatomic, assign) NSInteger type;
+
 @end

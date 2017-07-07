@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SCRefreshBase.h"
+#import "SCRefreshComponent.h"
 
-@interface SCRefresh : SCRefreshBase
+@interface SCRefresh : SCRefreshComponent
 
 @end
 

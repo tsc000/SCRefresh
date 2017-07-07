@@ -6,8 +6,9 @@
 //  Copyright © 2017年 DMS. All rights reserved.
 //
 
-#import "SCRefreshBase.h"
 
-@interface Enjoy : SCRefreshBase
+#import "SCRefreshHeader.h"
+
+@interface Enjoy : SCRefreshHeader
 
 @end

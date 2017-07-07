@@ -32,39 +32,50 @@
     
     self.tableView.dataSource = self;
     self.tableView.contentSize = CGSizeMake(375, 200);
-    self.tableView.refresh.backgroundColor = [UIColor blueColor];
+//    self.tableView.refresh.backgroundColor = [UIColor blueColor];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     
-    self.tableView.refresh = [ Enjoy refreshWithTarget:self HeaderAction:@selector(refresh) FooterAction:@selector(loadMore)];
-    
-}
-
-- (void)refresh {
-    __weak typeof (self)weakSelf = self;
-    [weakSelf.dataSource addObjectsFromArray:@[@"简单的下拉刷新测试"]];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        [weakSelf.tableView reloadData];
-        
-        [weakSelf.tableView.refresh endRefreshRefreshType:RefreshOptionHeader];
-    });
-    
-}
-
-- (void)loadMore {
     __weak typeof (self)weakSelf = self;
     
-    [weakSelf.dataSource addObjectsFromArray:@[@"简单的下拉刷新测试"]];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    self.tableView.sc_header = [Enjoy headerWithRefreshingCallBack:^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
-        [weakSelf.tableView.refresh endRefreshRefreshType:RefreshOptionFooter];
-        [weakSelf.tableView reloadData];
-    });
-    
+                [weakSelf.tableView reloadData];
+        
+                [weakSelf.tableView.sc_header endRefreshing];
+            });
+        
+    }];
+
+    [self.tableView.sc_header beginRefreshing];
+
+
+    UIButton *release = [UIButton buttonWithType:UIButtonTypeCustom];
+
+    [release setTitle:@"刷新" forState:UIControlStateNormal];
+    [release setTitle:@"刷新" forState:UIControlStateSelected];
+
+    [release setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+
+    [release sizeToFit];
+
+    [release addTarget:self action:@selector(shoppingCartButtonDidClick) forControlEvents:UIControlEventTouchUpInside];
+
+    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:release];
+
+    self.navigationItem.rightBarButtonItems = @[right];
+
+    [self.tableView.sc_header beginRefreshing];
 }
+
+- (void)shoppingCartButtonDidClick {
+
+    
+    [self.tableView.sc_header beginRefreshing];
+}
+
+
 
 
 #pragma mark --UITableViewDataSource

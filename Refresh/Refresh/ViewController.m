@@ -11,6 +11,9 @@
 #import "RefreshTableViewController.h"
 #import "RefreshCollectionViewController.h"
 #import "EnjoyTableViewController.h"
+#import "SCRefreshNormalFooter.h"
+#import "SCRefreshStateHeader.h"
+#import "LoganRefreshFooter.h"
 
 typedef NS_ENUM(NSInteger, ControlType) {
     ControlTypeScrollView = 0,
@@ -28,6 +31,7 @@ UITableViewDelegate
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 
+@property (nonatomic, strong) NSArray *sectionTitles;
 @end
 
 @implementation ViewController
@@ -35,69 +39,120 @@ UITableViewDelegate
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+//    self.edgesForExtendedLayout = false;
+    
+    self.sectionTitles = @[@"TableView", @"CollectionView", @"ScrollView"];
+    
     self.tableView.dataSource = self;
+    
     self.tableView.delegate = self;
-    self.tableView.rowHeight = 70;
+    
+    self.tableView.sectionHeaderHeight = 60;
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+    
+    self.tableView.sc_header = [SCRefreshStateHeader headerWithTarget:self action:@selector(refresh)];
+    
+    self.tableView.sc_footer = [SCRefreshNormalFooter footerWithTarget:self action:@selector(loadMore)];
+}
+
+- (void)refresh {
+    __weak typeof (self)weakSelf = self;
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+
+        [weakSelf.tableView.sc_header endRefreshing];
+        
+    });
+    
+}
+
+- (void)loadMore {
+    __weak typeof (self)weakSelf = self;
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+
+        [weakSelf.tableView.sc_footer endNoMoreDataRefreshing];
+  
+    });
 }
 
 #pragma mark --UITableViewDataSource
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return self.sectionTitles.count;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.dataSource.count;
+    
+    NSArray *array = self.dataSource[section];
+    
+    return array.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
-    cell.textLabel.text = _dataSource[indexPath.row];
+    NSArray *array = self.dataSource[indexPath.section];
+    
+    cell.textLabel.text = array[indexPath.row];
     
     cell.textLabel.font = [UIFont systemFontOfSize:20];
     
     cell.textLabel.textColor = [UIColor orangeColor];
-    
-    cell.imageView.image = [UIImage imageNamed:@"timg"];
-    
+
     return cell;
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return _sectionTitles[section];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 60;
+}
 #pragma mark --UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    switch (indexPath.row) {
-        case ControlTypeScrollView:
-            [self.navigationController pushViewController:[[RefreshScrollViewController alloc] init] animated:true];
-            break;
-        case ControlTypeTableView:
-
-            [self.navigationController pushViewController:[[RefreshTableViewController alloc] init] animated:true];
-            break;
-
-        case ControlTypeCollectionView:
-        {
-            UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-            [self.navigationController pushViewController:[[RefreshCollectionViewController alloc] initWithCollectionViewLayout:layout] animated:true];
+    
+    if (indexPath.section == 0) {
+        
+        if (indexPath.row == 3) {
+            EnjoyTableViewController *vc = [EnjoyTableViewController new];
+            
+            [self.navigationController pushViewController:vc animated:true];
+            
+            return;
         }
-            
-        break;
-            
-        case ControlTypeEnjoy:
-            [self.navigationController pushViewController:[[EnjoyTableViewController alloc] init] animated:true];
-        break;
-        default:
-            break;
+        
+        RefreshTableViewController *vc = [RefreshTableViewController new];
+        
+        vc.type = indexPath.row;
+        
+        [self.navigationController pushViewController:vc animated:true];
+        
+    } else if (indexPath.section == 1) {
+        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+        [self.navigationController pushViewController:[[RefreshCollectionViewController alloc] initWithCollectionViewLayout:layout] animated:true];
+    } else if (indexPath.section == 2) {
+        RefreshScrollViewController *vc = [RefreshScrollViewController new];
+        
+        [self.navigationController pushViewController:vc animated:true];
     }
+
 }
 
 - (NSMutableArray *)dataSource {
     if (_dataSource == nil) {
         _dataSource = [NSMutableArray array];
-        [_dataSource addObject:@"scrollView测试"];
-        [_dataSource addObject:@"tableView测试"];
-        [_dataSource addObject:@"collectionView测试"];
-        [_dataSource addObject:@"Enjoy刷新"];
+        
+        NSArray *tableViewSection = @[@"默认", @"自定义文字", @"自定义底部", @"Enjoy刷新", @"顶部隐藏时间"];
+        NSArray *collectionViewSection = @[@"默认"];
+        NSArray *scrollViewSection = @[@"默认"];
+
+        [_dataSource addObjectsFromArray:@[tableViewSection, collectionViewSection, scrollViewSection]];
+
     }
     
     return _dataSource;

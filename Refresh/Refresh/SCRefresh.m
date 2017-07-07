@@ -8,7 +8,7 @@
 
 #import "SCRefresh.h"
 
-@interface SCRefresh ()<SCRefreshBaseDelegate>
+@interface SCRefresh ()<SCRefreshComponentDelegate>
 {
     NSDate *_lastRefreshDate; /** 保存刷新时间 */
 }
@@ -40,7 +40,7 @@
     self = [super init];
     if (self) {
         //底部上拉之后默认显示数据
-        self.loadingFootTitle = SCRefreshingBottomTitle;
+//        self.loadingFootTitle = SCRefreshingBottomTitle;
 
         self.delegate = self;
     }
@@ -57,7 +57,7 @@
 
     if (type & RefreshOptionHeader) {
         
-        [super endRefreshRefreshType:type & RefreshOptionHeader];
+//        [super endRefreshRefreshType:type & RefreshOptionHeader];
         
         [self setRefresh:false Type:type & RefreshOptionHeader];
  
@@ -68,43 +68,43 @@
         
         [self.bottomFlower stopAnimating];
         //如果加载到最后没有数据了且设置了finishedFootTitle
-        if (self.finishedFootTitle) {
-            
-            [self.bottomButton setTitle: self.finishedFootTitle forState:UIControlStateNormal];
-            
-            self.bottomButton.enabled = false;
-            
-            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(SCFinshRemainTime * NSEC_PER_SEC));
-            
-            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                
-                self.finishedFootTitle = nil;
-                
-                self.bottomButton.enabled = true;
-                
-                [super endRefreshRefreshType:type & RefreshOptionFooter];
-                
-                [self.bottomButton setTitle: SCStaticBottomTitle forState:UIControlStateNormal];
-            });
-            
-        }
-        else {
-            
-            //非刷新状态且没有设置finishedFootTitle
-            [self.bottomButton setTitle: SCStaticBottomTitle forState:UIControlStateNormal];
-            
-            [super endRefreshRefreshType:type & RefreshOptionFooter];
-        }
+//        if (self.finishedFootTitle) {
+//            
+//            [self.bottomButton setTitle: self.finishedFootTitle forState:UIControlStateNormal];
+//            
+//            self.bottomButton.enabled = false;
+//            
+//            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(SCFinshRemainTime * NSEC_PER_SEC));
+//            
+//            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//                
+//                self.finishedFootTitle = nil;
+//                
+//                self.bottomButton.enabled = true;
+//                
+////                [super endRefreshRefreshType:type & RefreshOptionFooter];
+//                
+//                [self.bottomButton setTitle: SCStaticBottomTitle forState:UIControlStateNormal];
+//            });
+//            
+//        }
+//        else {
+//            
+//            //非刷新状态且没有设置finishedFootTitle
+//            [self.bottomButton setTitle: SCStaticBottomTitle forState:UIControlStateNormal];
+//            
+////            [super endRefreshRefreshType:type & RefreshOptionFooter];
+//        }
 
     }
 
-    [self updateRefreshTime];
+
    
 }
 
 - (void)beginRefreshRefreshType:(RefreshOptions)type {
 
-    [super beginRefreshRefreshType:type];
+//    [super beginRefreshRefreshType:type];
 
     [self setRefresh:true Type:type];
 }
@@ -122,7 +122,7 @@
         
         self.topFlower.hidden = !refresh;
         
-        self.remind.text = refresh? SCRefreshingTopTitle : SCStaticTopTitle;
+        self.remind.text = refresh? SCTopRefreshingTitle : SCTopNomalTitle;
         
         refresh ? [self.topFlower startAnimating] : [self.topFlower stopAnimating];
     }
@@ -132,70 +132,54 @@
         
         refresh ? [self.bottomFlower startAnimating]:[self.bottomFlower stopAnimating];
         
-        //刷新状态
-        if (refresh) {
-            [self.bottomButton setTitle: self.loadingFootTitle forState:UIControlStateNormal];
-        }
-        
+//        //刷新状态
+//        if (refresh) {
+//            [self.bottomButton setTitle: self.loadingFootTitle forState:UIControlStateNormal];
+//        }
+//        
     }
     
 }
 
-/** 更新刷新时间 */
-- (void)updateRefreshTime {
-    
-     NSDate *date = [NSDate date];
-    
-     _lastRefreshDate = date;
-    
-     [self setRefreshTime:date];
-    
-     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    
-     [formatter setDateFormat:@"HH:mm"];
-    
-     self.time.text = [NSString stringWithFormat:@"最后更新: 今天 %@",[formatter stringFromDate:date]];
-}
-
 - (void)changeFrameAndState {
+//    
+//     if (self.option & RefreshOptionHeader) {
+//     
+//         // self.scrollView.centerX - self.scrollView.x 考虑的是scrollView不是屏幕宽度
+//         self.remind.centerX = self.scrollView.centerX - self.scrollView.x;
+//         
+//         self.time.centerX = self.remind.centerX;
+//         
+//         self.imageView.x = self.time.x - 40;
+//         
+//         self.topFlower.centerX = self.imageView.centerX;
+//     
+//     }
+//    
+//     if (self.option & RefreshOptionFooter) {
+//     
+//         self.bottomButton.centerX = self.scrollView.centerX - self.scrollView.x;
+//         
+//         self.bottomFlower.x = self.scrollView.centerX - 100 - self.scrollView.x;
+//         
+//         self.bottomFlower.y = self.scrollView.contentSize.height + 2;
+//         
+//         self.bottomButton.centerY = self.bottomFlower.centerY;
+//         
+//         self.bottomButton.hidden = self.scrollView.contentSize.height == 0 ? true: false;
+//     
+//     }
     
-     if (self.option & RefreshOptionHeader) {
-     
-         // self.scrollView.centerX - self.scrollView.x 考虑的是scrollView不是屏幕宽度
-         self.remind.centerX = self.scrollView.centerX - self.scrollView.x;
-         
-         self.time.centerX = self.remind.centerX;
-         
-         self.imageView.x = self.time.x - 40;
-         
-         self.topFlower.centerX = self.imageView.centerX;
-     
-     }
-    
-     if (self.option & RefreshOptionFooter) {
-     
-         self.bottomButton.centerX = self.scrollView.centerX - self.scrollView.x;
-         
-         self.bottomFlower.x = self.scrollView.centerX - 100 - self.scrollView.x;
-         
-         self.bottomFlower.y = self.scrollView.contentSize.height + 2;
-         
-         self.bottomButton.centerY = self.bottomFlower.centerY;
-         
-         self.bottomButton.hidden = self.scrollView.contentSize.height == 0 ? true: false;
-     
-     }
-     
 }
 
-#pragma mark- SCRefreshBaseDelegate
+#pragma mark- SCRefreshComponentDelegate
 
 - (void)normalStatus {
     [UIView animateWithDuration:SCDisappearTime animations:^{
         
         self.imageView.transform = CGAffineTransformIdentity;
         
-        self.remind.text = SCStaticTopTitle;
+        self.remind.text = SCTopNomalTitle;
     }];
 
 }
@@ -205,7 +189,7 @@
         
         self.imageView.transform = CGAffineTransformRotate(self.imageView.transform, 0.000001 - M_PI);
         
-        self.remind.text = SCScrollTopTitle;
+        self.remind.text = SCTopPulledTitle;
     }];
 }
 
@@ -225,14 +209,14 @@
 /** 为下拉刷新控件添加子控件 */
 - (void)setupHeaderWithSuperview:(UIView *)newSuperview {
     
-    [super setupHeaderWithSuperview:newSuperview];
+//    [super setupHeaderWithSuperview:newSuperview];
     
     /** 提示 */
-    self.remind = [self createLabelWithCenter:CGPointMake(self.scrollView.centerX - self.scrollView.x, -50) Width:120 Height:24 Title: SCStaticTopTitle];
+    self.remind = [self createLabelWithCenter:CGPointMake(self.scrollView.centerX - self.scrollView.x, -50) Width:120 Height:24 Title: SCTopPulledTitle];
     
     /** 时间 */
     self.time = [self createLabelWithCenter:CGPointMake(self.scrollView.centerX - self.scrollView.x, CGRectGetMaxY(self.remind.frame)) Width:160 Height:24 Title:@"最后更新: 暂无更新"];
-    self.time.text = [self getLastRefreshTime:SCLastRefreshTime];
+//    self.time.text = [self getLastRefreshTime:SCLastRefreshTime];
     
     /** 箭头 */
     [self createImageViewWithFrame:CGRectMake(self.time.x - 50, - SCRefreshHeight + (SCRefreshHeight - 40)/2, 15, 40)];
@@ -245,23 +229,16 @@
 /** 为上拉加载更多控件添加子控件 */
 - (void)setupFooterWithSuperview:(UIView *)newSuperview {
     
-    [super setupFooterWithSuperview:newSuperview];
-        
-    /** 上拉菊花 */
-    self.bottomFlower = [self createActivityIndicatorViewWithWidthAndHeight:SCBottomHeight Center:CGPointMake(self.scrollView.centerX - 100 / 375.0 * self.scrollView.width, self.bottomButton.centerY)];//菊花
+//    [super setupFooterWithSuperview:newSuperview];
     
-    ///下面本来可以不用写，无奈UIScrollView在设置refresh之前没有监听contenSize的方法,继承它的方法倒是监听了
-    self.bottomFlower.y = self.scrollView.contentSize.height  + 2;
     
-    /** 上拉点击按钮 */
-    self.bottomButton = [self createButton];
 }
 
 /** 创建按钮 */
 - (UIButton *)createButton {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     
-    [button setTitle:SCStaticBottomTitle forState:UIControlStateNormal];
+    [button setTitle:SCBottomNormalTitle forState:UIControlStateNormal];
     
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     

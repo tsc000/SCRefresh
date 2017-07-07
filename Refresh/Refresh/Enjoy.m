@@ -10,8 +10,10 @@
 
 #define LightGray ([[UIColor colorWithRed:214 /255.0 green:214 /255.0 blue:214 /255.0 alpha:1.0] setFill])
 
-@interface Enjoy ()
-
+@interface Enjoy ()<SCRefreshComponentDelegate>
+{
+    RefreshState _oldstate;
+}
 /** 顶部箭头 */
 @property (nonatomic, strong) UIImageView *imageView;
 
@@ -31,45 +33,128 @@
 
 @implementation Enjoy
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        self.delegate = self;
-        
-        self.backgroundColor = [UIColor yellowColor];
-    }
-    return self;
-}
-
-- (void)willMoveToSuperview:(UIView *)newSuperview {
-
-    [super willMoveToSuperview:newSuperview];
+- (void)prepare {
+    [super prepare];
     
-    self.imageView.centerX = self.scrollView.centerX - self.scrollView.x;
-}
-
-- (void)removeFromSuperview {
-    [super removeFromSuperview];
+    [self createRectWithName:@"2"];
+    [self createRectWithName:@"3"];
+    [self createFrame];
     
-    if (self.timer) {
-        dispatch_cancel(self.timer);
-        
-        self.timer = nil;
-    }
-}
-
-- (void)setupHeaderWithSuperview:(UIView *)newSuperview {
-
-    [super setupHeaderWithSuperview:newSuperview];
-
-    self.imageView = [self createImageViewWithFrame:CGRectMake(0, - SCRefreshHeight + (SCRefreshHeight - 40)/2, SCRefreshHeight, SCRefreshHeight)];
+    self.imageView = [self createImageViewWithFrame:CGRectMake(0, - SCTopHeight + (SCTopHeight - 40)/2, SCTopHeight, SCTopHeight)];
     
-    self.smallImageView = [self createImageViewWithFrame:CGRectMake(0, - SCRefreshHeight + (SCRefreshHeight - 40)/2, 15, 10)];
+    self.smallImageView = [self createImageViewWithFrame:CGRectMake(0, - SCTopHeight + (SCTopHeight - 40)/2, 15, 10)];
     
     self.smallImageView.center = self.imageView.center;
     
     self.smallImageView.backgroundColor = [UIColor redColor];
+    
+}
+
+- (void)placeSubviews {
+    
+    [super placeSubviews];
+    
+    self.imageView.centerX = self.scrollView.centerX - self.scrollView.x;
+    
+    self.smallImageView.center = self.imageView.center;
+}
+
+- (void)endRefreshing {
+    [super endRefreshing];
+
+    dispatch_cancel(self.timer);
+    
+    self.timer = nil;
+}
+
+- (void)scrollViewContentOffsetChange:(NSDictionary *)change {
+    [super scrollViewContentOffsetChange:change];
+    
+    
+    
+    [self createCirecle:[change[@"new"] CGPointValue].y];
+    
+    [self createRectWithName:@"2"];
+    [self createRectWithName:@"3"];
+    [self createFrame];
+    
+}
+
+/** 监听ContentSize改变事件 */
+- (void)scrollViewContentSizeChange:(NSDictionary *)change {
+    
+    [super scrollViewContentSizeChange:change];
+    
+    
+}
+
+
+- (void)normal2pulled:(CGFloat)contentOffSide {
+    [super normal2pulled:contentOffSide];
+    
+    NSString *p =  [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"2.png"];
+    NSLog(@"%@",p);
+    
+    self.smallImageView.center = self.imageView.center;
+    
+    [self createCirecle:contentOffSide];
+    
+    [self createRectWithName:@"2"];
+    [self createRectWithName:@"3"];
+    [self createFrame];
+}
+
+- (void)pulled2nomal:(CGFloat)contentOffSide {
+    
+    if (self.contentOffSide >= contentOffSide) return;
+    
+    [self createCirecle:contentOffSide];
+    
+}
+
+- (void)setState:(RefreshState)state {
+    
+    //防止重复调用
+    SCStateCheck();
+    
+    if (state == RefreshStateRefreshing) {
+        self.num = 1;
+        
+        self.reset = false;
+        
+        if (!self.timer) {
+            
+            dispatch_queue_t queue =dispatch_get_main_queue();
+            
+            // 创建一个定时器(dispatch_source_t本质还是个OC对象)
+            
+            self.timer =dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER,0, 0, queue);
+            
+            dispatch_time_t start =dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC));
+            
+            uint64_t interval = (uint64_t)(0.07 *NSEC_PER_SEC);
+            
+            dispatch_source_set_timer(self.timer, start, interval,0);
+            
+            // 设置回调
+            
+            dispatch_source_set_event_handler(self.timer, ^{
+                
+                [self creatMaskLayer:_num];
+                _num -= 0.1;
+                if (_num <= -0.1) {
+                    
+                    self.reset = !self.reset;
+                    _num = 1;
+                }
+                
+            });
+            
+            dispatch_resume(self.timer);
+            
+        }
+
+    }
 }
 
 /** 创建箭头 */
@@ -82,80 +167,6 @@
     [self addSubview:imageView];
     
     return imageView;
-}
-
-#pragma mark- SCRefreshBaseDelegate
-
-- (void)refreshStatus {
-    [self beginRefreshRefreshType:RefreshOptionHeader];
-
-    self.num = 1;
-    
-    self.reset = false;
-    
-    if (!self.timer) {
-        
-        dispatch_queue_t queue =dispatch_get_main_queue();
-        
-        // 创建一个定时器(dispatch_source_t本质还是个OC对象)
-        
-        self.timer =dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER,0, 0, queue);
-
-        dispatch_time_t start =dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC));
-        
-        uint64_t interval = (uint64_t)(0.07 *NSEC_PER_SEC);
-        
-        dispatch_source_set_timer(self.timer, start, interval,0);
-        
-        // 设置回调
-        
-        dispatch_source_set_event_handler(self.timer, ^{
-            
-            [self creatMaskLayer:_num];
-            _num -= 0.1;
-            if (_num <= -0.1) {
-
-                self.reset = !self.reset;
-                _num = 1;
-            }
-            
-        });
-        
-        dispatch_resume(self.timer);
-
-    }
-    
-}
-
-- (void)normal2pulled:(CGFloat)contentOffSide {
-
-    NSString *p =  [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"2.png"];
-    NSLog(@"%@",p);
-    
-    self.smallImageView.center = self.imageView.center;
-    
-
-    [self createCirecle:contentOffSide];
-
-    [self createRectWithName:@"2"];
-    [self createRectWithName:@"3"];
-    [self createFrame];
-}
-
-- (void)pulled2nomal:(CGFloat)contentOffSide {
-    
-    if (self.contentOffSide >= contentOffSide) return;
-    
-    [self createCirecle:contentOffSide];
-
-}
-
-- (void)endRefreshRefreshType:(RefreshOptions)type {
-    [super endRefreshRefreshType:type];
-
-    dispatch_cancel(self.timer);
-    
-    self.timer = nil;
 }
 
 - (void)createRectWithName:(NSString *)name {
