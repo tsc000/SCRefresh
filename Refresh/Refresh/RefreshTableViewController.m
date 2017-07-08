@@ -40,7 +40,7 @@
     self.tableView.dataSource = self;
     self.tableView.contentSize = CGSizeMake(375, 200);
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
+    self.tableView.showsVerticalScrollIndicator = true;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     
     switch (self.type) {
@@ -199,7 +199,7 @@
 - (NSMutableArray *)dataSource {
     if (_dataSource == nil) {
         _dataSource = [NSMutableArray array];
-        for (NSInteger i=0; i<25; i++) {
+        for (NSInteger i=0; i<0; i++) {
             [_dataSource addObject:@"简单的下拉刷新测试"];
         }
     }

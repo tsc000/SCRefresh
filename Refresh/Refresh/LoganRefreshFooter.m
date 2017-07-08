@@ -65,8 +65,16 @@
     
     [super scrollViewContentSizeChange:change];
     
+    if ([self isRefreshing]) {
+        return;
+    }
+    
     if (self.type == 0) {
+        
         [self changeFrame];
+        
+        NSLog(@"changeFrame: %f", [change[@"new"] CGSizeValue].height);
+        
     } else {
         self.logo.hidden = false;
         
@@ -83,8 +91,16 @@
         self.bottomFlower.centerY = self.bottomButton.centerY;
         
 //        [self setNeedsLayout];
-
-        [self.scrollView setContentOffset:CGPointMake(0, self.scrollView.contentSize.height + self.bottomHeight - self.scrollView.height) animated:true];
+        
+//        CGFloat y = self.scrollView.contentSize.height + self.bottomHeight -self.scrollView.height;
+//        
+//        if (y <= 0) {
+//            y = 0;
+//        }
+//        
+//        NSLog(@"y: %f", y);
+//        
+//        [self.scrollView setContentOffset:CGPointMake(0, y) animated:true];
         
         self.finishedFootTitle = @"没有更多了";
         
@@ -101,7 +117,9 @@
     
     self.bottomHeight = SCBottomHeight;
     
-//    [self setNeedsLayout];
+    self.finishedFootTitle = SCBottomNormalTitle;
+    
+    [self setNeedsLayout];
     
     self.logo.hidden = true;
     
@@ -119,7 +137,13 @@
     
 //    [self setNeedsLayout];
 
-    [self.scrollView setContentOffset:CGPointMake(0, self.scrollView.contentSize.height + self.bottomHeight -self.scrollView.height) animated:true];
+    CGFloat y = self.scrollView.contentSize.height + self.bottomHeight -self.scrollView.height;
+    
+    if (y <= 0) {
+        y = 0;
+    }
+    
+    [self.scrollView setContentOffset:CGPointMake(0, y) animated:true];
     
     self.finishedFootTitle = @"没有更多了";
     
@@ -149,6 +173,8 @@
 
 
 - (void)changeFrame {
+    
+    self.bottomHeight = SCBottomHeight;
     
     self.logo.y = self.scrollView.contentSize.height + 5;
     

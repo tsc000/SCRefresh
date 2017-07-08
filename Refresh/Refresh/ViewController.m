@@ -37,11 +37,14 @@ UITableViewDelegate
 @implementation ViewController
 
 - (void)viewDidLoad {
+
     [super viewDidLoad];
     
-    self.edgesForExtendedLayout = false;
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     
     self.sectionTitles = @[@"TableView", @"CollectionView", @"ScrollView"];
+    
+    self.tableView.frame = CGRectMake(0, 0, self.tableView.frame.size.width, self.tableView.size.height - 49 -64);
     
     self.tableView.dataSource = self;
     
@@ -129,6 +132,8 @@ UITableViewDelegate
         
         RefreshTableViewController *vc = [RefreshTableViewController new];
         
+        vc.tabBarController.hidesBottomBarWhenPushed = true;
+        
         vc.type = indexPath.row;
         
         [self.navigationController pushViewController:vc animated:true];
@@ -148,7 +153,7 @@ UITableViewDelegate
     if (_dataSource == nil) {
         _dataSource = [NSMutableArray array];
         
-        NSArray *tableViewSection = @[@"默认", @"自定义顶部文字", @"自定义底部文字", @"自定义底部", @"Enjoy刷新", @"顶部隐藏时间"];
+        NSArray *tableViewSection = @[@"默认", @"自定义顶部文字", @"自定义底部文字", @"自定义底部", @"Enjoy刷新", @"顶部隐藏时间", @"顶部隐藏时间", @"顶部隐藏时间", @"顶部隐藏时间", @"顶部隐藏时间", @"顶部隐藏时间", @"顶部隐藏时间"];
         NSArray *collectionViewSection = @[@"默认"];
         NSArray *scrollViewSection = @[@"默认"];
 
