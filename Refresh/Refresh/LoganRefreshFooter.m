@@ -72,9 +72,7 @@
     if (self.type == 0) {
         
         [self changeFrame];
-        
-        NSLog(@"changeFrame: %f", [change[@"new"] CGSizeValue].height);
-        
+
     } else {
         self.logo.hidden = false;
         

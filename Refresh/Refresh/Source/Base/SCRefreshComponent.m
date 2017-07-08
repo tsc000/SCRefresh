@@ -11,6 +11,8 @@
 // 3 下拉控件怎么实时显示到最底层
 // 4 performSelector 警告
 // 5 观察者被移除问题
+// 6 进入下个控制器直接刷新问题
+// 7
 
 #import "SCRefreshComponent.h"
 

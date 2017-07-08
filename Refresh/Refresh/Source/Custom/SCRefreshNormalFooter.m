@@ -51,9 +51,7 @@
 - (void)scrollViewContentSizeChange:(NSDictionary *)change {
     
     [super scrollViewContentSizeChange:change];
-    
-    NSLog(@"%f", [change[@"new"] CGSizeValue].height);
-    
+
     if ([change[@"new"] CGSizeValue].height <= 0 ) {
         
         self.bottomButton.hidden = true;

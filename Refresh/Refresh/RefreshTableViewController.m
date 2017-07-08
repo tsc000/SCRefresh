@@ -199,7 +199,7 @@
 - (NSMutableArray *)dataSource {
     if (_dataSource == nil) {
         _dataSource = [NSMutableArray array];
-        for (NSInteger i=0; i<0; i++) {
+        for (NSInteger i=0; i<6; i++) {
             [_dataSource addObject:@"简单的下拉刷新测试"];
         }
     }
